@@ -8,13 +8,13 @@ import (
 )
 
 func check(e error) {
-    if e != nil {
-        panic(e)
-    }
+  if e != nil {
+    panic(e)
+  }
 }
 
 func main() {
-	increases_for_groups_of(3)
+  increases_for_groups_of(3)
 }
 
 func array_sum(array []int) int {
@@ -26,7 +26,7 @@ func array_sum(array []int) int {
 }
 
 func increases_for_groups_of(array_size int) {
-	// os.Open() opens specific file in
+  // os.Open() opens specific file in
   // read-only mode and this returns
   // a pointer of type os.
   file, err := os.Open("./input.txt")
@@ -42,17 +42,17 @@ func increases_for_groups_of(array_size int) {
   var total_increases int = 0
 
   for scanner.Scan() {
-  	current_depth, err := strconv.Atoi(scanner.Text())
-  	check(err)
+    current_depth, err := strconv.Atoi(scanner.Text())
+    check(err)
 
-  	depths = append(depths, current_depth)
+    depths = append(depths, current_depth)
 
-  	if len(depths) == array_size + 1 {
-  		if array_sum(depths[1:array_size+1]) > array_sum(depths[0:array_size]) {
-  			total_increases++
-  		}
-  		depths = depths[1:]
-  	}
+    if len(depths) == array_size + 1 {
+      if array_sum(depths[1:array_size+1]) > array_sum(depths[0:array_size]) {
+        total_increases++
+      }
+      depths = depths[1:]
+    }
   }
 
   // The method os.File.Close() is called
@@ -60,6 +60,6 @@ func increases_for_groups_of(array_size int) {
   file.Close()
 
   fmt.Println("-----------------")
-	fmt.Println(total_increases)
+  fmt.Println(total_increases)
   fmt.Println("-----------------")
 }
