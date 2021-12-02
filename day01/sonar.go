@@ -14,6 +14,18 @@ func check(e error) {
 }
 
 func main() {
+	increases_for_groups_of(3)
+}
+
+func array_sum(array []int) int {
+ result := 0
+ for _, v := range array {
+  result += v
+ }
+ return result
+}
+
+func increases_for_groups_of(array_size int) {
 	// os.Open() opens specific file in
   // read-only mode and this returns
   // a pointer of type os.
@@ -26,25 +38,21 @@ func main() {
   // bufio.Scanner.Split() method.
   scanner := bufio.NewScanner(file)
 
-  var text []string
-  // var current_depth int
-  var previous_depth int
+  var depths []int
   var total_increases int = 0
 
   for scanner.Scan() {
-  	row_text := scanner.Text()
-  	current_depth, err := strconv.Atoi(row_text)
+  	current_depth, err := strconv.Atoi(scanner.Text())
   	check(err)
 
-  	if previous_depth != 0 {
-  		fmt.Println(previous_depth)
-  		if previous_depth < current_depth {
+  	depths = append(depths, current_depth)
+
+  	if len(depths) == array_size + 1 {
+  		if array_sum(depths[1:array_size+1]) > array_sum(depths[0:array_size]) {
   			total_increases++
   		}
+  		depths = depths[1:]
   	}
-
-    text = append(text, row_text)
-    previous_depth = current_depth
   }
 
   // The method os.File.Close() is called
@@ -53,12 +61,5 @@ func main() {
 
   fmt.Println("-----------------")
 	fmt.Println(total_increases)
-
   fmt.Println("-----------------")
-
-  // and then a loop iterates through
-  // and prints each of the slice values.
-  // for _, each_ln := range text {
-  //     fmt.Println(each_ln)
-  // }
 }
