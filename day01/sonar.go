@@ -25,6 +25,7 @@ func array_sum(array []int) int {
  return result
 }
 
+// Pass in array_size of 1 for Part 1
 func increases_for_groups_of(array_size int) {
   // os.Open() opens specific file in
   // read-only mode and this returns
