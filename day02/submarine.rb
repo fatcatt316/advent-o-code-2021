@@ -4,14 +4,9 @@ class Submarine
   VALID_INSTRUCTIONS = %q(forward down up).freeze
 
   def self.run(filepath = 'input.txt')
-    sub = new(depth: 0, horizontal_position: 0)
+    sub = new
     sub.move(filepath)
     puts sub.depth * sub.horizontal_position
-  end
-
-  def initialize(attributes)
-    self.depth = attributes.fetch(:depth)
-    self.horizontal_position = attributes.fetch(:horizontal_position)
   end
 
   def move(filepath)
@@ -20,6 +15,12 @@ class Submarine
       raise("Unallowed instruction! #{instructions[0]}") unless VALID_INSTRUCTIONS.include?(instructions[0])
       self.send(instructions[0], instructions[1].to_i)
     end
+  end
+end
+
+class Part1Submarine < Submarine
+  def initialize
+    self.depth, self.horizontal_position = 0, 0
   end
 
   private def forward(units)
@@ -35,27 +36,11 @@ class Submarine
   end
 end
 
-class Submarine2
-  attr_accessor :depth, :horizontal_position, :aim
-
-  VALID_INSTRUCTIONS = %q(forward down up).freeze
-
-  def self.run(filepath = 'input.txt')
-    sub = new
-    sub.move(filepath)
-    puts sub.depth * sub.horizontal_position
-  end
+class Part2Submarine < Submarine
+  attr_accessor :aim
 
   def initialize
     self.aim, self.depth, self.horizontal_position = 0, 0, 0
-  end
-
-  def move(filepath)
-    File.readlines(filepath).each do |line|
-      instructions = line.split
-      raise("Unallowed instruction! #{instructions[0]}") unless VALID_INSTRUCTIONS.include?(instructions[0])
-      self.send(instructions[0], instructions[1].to_i)
-    end
   end
 
   private def forward(units)
@@ -72,5 +57,5 @@ class Submarine2
   end
 end
 
-Submarine.run
-Submarine2.run('input.txt')
+Part1Submarine.run('test_input.txt')
+Part2Submarine.run('test_input.txt')
